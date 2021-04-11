@@ -1,0 +1,51 @@
+version: '3'
+services:
+   db:
+      container_name: mysql57
+      image: mysql:5.7
+      environment:
+         - MYSQL_ROOT_PASSWORD=root
+         - MYSQL_DATABASE=mydb
+         - MYSQL_USER=user
+         - MYSQL_PASSWORD=password
+      volumes: 
+         - ./data/mydb.sql:/docker-entrypoint-initdb.d/dump.sql
+      networks:
+         - samenet
+   web:
+      build: ./src
+      container_name: php73
+      environment:
+         - MYSQL_HOST=mysql57
+         - MYSQL_DATABASE=mydb
+         - MYSQL_USER=user
+         - MYSQL_PASSWORD=password
+      volumes:
+         - ./src:/var/www/html/
+      depends_on:
+         - db
+      ports:
+         - 80:80
+      networks:
+         - samenet
+   
+   phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: mphpadmin
+      depends_on:
+         - db
+      networks:
+         - samenet
+      external_links: 
+         - db:mysql
+      ports:
+         - 9090:80
+      environment:
+         - PMA_HOST=mysql57
+         - PMA_PORT=3306
+      volumes:
+         - /sessions         
+networks:
+   samenet:
+
+  
