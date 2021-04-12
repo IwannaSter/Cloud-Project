@@ -1,5 +1,5 @@
 # Cloud-Project
-Build a containerized web application with Docker
+Title: Build a containerized web application with Docker
 
 The application uses the following tools, which are installed on
 separate containers, which are:
@@ -7,3 +7,6 @@ separate containers, which are:
 HTTP.
 - MySQL database which stores all application information.
 - phpMyAdmin (optional) to manage MySQL database.
+
+The API provides the four primitive operations: Create, Read, Update, and Delete.
+A simple login system implemented, based on tokens.
